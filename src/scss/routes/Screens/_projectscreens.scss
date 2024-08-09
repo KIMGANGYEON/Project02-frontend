@@ -1,0 +1,73 @@
+.projectscreens {
+  font-size: 50px;
+  color: white;
+  overflow-x: hidden;
+  .projectscreens_first {
+    height: 100vh;
+    background-color: gray;
+  }
+  .projectscreens_container {
+    width: 600vw;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    .panel {
+      width: 100vw;
+      height: 100vh;
+      .img_filter {
+        width: 100%;
+        height: 100%;
+        img {
+          height: 100vh;
+          width: 100vw;
+          object-fit: cover;
+        }
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.9) 100%
+        );
+      }
+      .img_cover {
+        position: absolute;
+        width: 60%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        animation: moveUpDown2 2s ease infinite;
+        img {
+          width: 100%;
+          height: 100%;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  .last {
+    background-color: red;
+    height: 100vh;
+  }
+}
+
+@keyframes moveUpDown2 {
+  0% {
+    top: 50%;
+  }
+  50% {
+    top: 53%;
+  }
+  100% {
+    top: 50%;
+  }
+}
