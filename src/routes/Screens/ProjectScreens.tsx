@@ -1,10 +1,12 @@
 import img1 from "../../img/project01/1.jpg";
 import img2 from "../../img/project01/2.jpg";
 
+import project2img1 from "../../img/project02/img1.jpg";
+import project2img2 from "../../img/project02/img2.jpg";
+
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useLayoutEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 gsap.registerPlugin(ScrollTrigger);
 
 const ProjectScreens = () => {
@@ -55,8 +57,15 @@ const ProjectScreens = () => {
             </div>
           </div>
         </div>
-        <div className="panel" style={{ backgroundColor: "navy" }}>
-          Three
+        <div className="panel" style={{ backgroundColor: "black" }}>
+          <div className="img_filter">
+            <img src={project2img1} alt="" />
+            <div className="img_cover">
+              <a href="/project02" target="_blank">
+                <img src={project2img2} alt="" />
+              </a>
+            </div>
+          </div>
         </div>
         <div className="panel" style={{ backgroundColor: "blue" }}>
           four

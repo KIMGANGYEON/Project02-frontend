@@ -1,0 +1,41 @@
+.project02_navbar {
+  border-bottom: 3px solid black;
+  padding: 0 30px;
+  width: 100vw;
+  .project02_menubar {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    span {
+      font-weight: 600;
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+    }
+  }
+  .project02_navbar_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    .project02_navbar_header_title {
+      font-size: 100px;
+      font-weight: bold;
+    }
+    .project02_navbar_header_text {
+      display: flex;
+      gap: 15px;
+      font-size: 20px;
+      h1 {
+        font-weight: 500;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
