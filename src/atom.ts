@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist({
   storage: sessionStorage,
 });
 
-export const userState = atom({
+export const isAuth = atom({
   key: "userLoggedIn",
   default: {
     email: "",

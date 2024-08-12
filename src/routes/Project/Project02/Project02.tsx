@@ -6,7 +6,6 @@ import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
 import Join from "./screens/Join";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../../atom";
 import Notauthroutes from "./common/Notauthroutes";
 
 const Layout = () => {
@@ -21,16 +20,15 @@ const Layout = () => {
 };
 
 const Project02 = () => {
-  const value = useRecoilValue(userState);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
 
-        <Route element={<Notauthroutes isAuth={value.isLoggedIn} />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/join" element={<Join />} />
-        </Route>
+        {/* <Route element={<Notauthroutes isAuth={value.isLoggedIn} />}> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/join" element={<Join />} />
+        {/* </Route> */}
 
         <Route path="*" element={<NotFound />} />
       </Route>

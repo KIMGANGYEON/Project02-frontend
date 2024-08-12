@@ -4,10 +4,8 @@ import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
 import { getSelfDevelop } from "../../../../api";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../../atom";
 
 const Home = () => {
-  const [user, setUser] = useRecoilState(userState);
   const { isLoading, data: selfDevelop } = useQuery({
     queryKey: ["selfDevelop"],
     queryFn: getSelfDevelop,

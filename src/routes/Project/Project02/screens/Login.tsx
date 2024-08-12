@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../../atom";
+import { isAuth } from "../../../../atom";
 
 interface error {
   errorMessage: string;
@@ -18,7 +18,8 @@ interface sendData {
 
 const Login = () => {
   const [error, setError] = useState<error>();
-  const [user, setUser] = useRecoilState(userState);
+  const [userState, setUserState] = useRecoilState(isAuth);
+  console.log(userState);
   const navigate = useNavigate();
   const {
     register,
@@ -35,7 +36,7 @@ const Login = () => {
       );
       if (response.status === 201) {
         reset();
-        setUser({ email: data.email, isLoggedIn: true });
+        setUserState({ isLoggedIn: true });
         toast.success("로그인에 성공하셨습니다");
         navigate("/project02");
       }
@@ -45,7 +46,6 @@ const Login = () => {
       }
     }
   };
-  console.log(user);
 
   const userEmail = {
     required: "이메일을 입력해 주세요",
