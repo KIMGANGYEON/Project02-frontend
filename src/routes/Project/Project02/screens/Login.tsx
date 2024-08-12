@@ -1,6 +1,15 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useRecoilState } from "recoil";
+import { userState } from "../../../../atom";
+
+interface error {
+  errorMessage: string;
+}
 
 interface sendData {
   email: string;
@@ -8,6 +17,9 @@ interface sendData {
 }
 
 const Login = () => {
+  const [error, setError] = useState<error>();
+  const [user, setUser] = useRecoilState(userState);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -15,9 +27,25 @@ const Login = () => {
     reset,
   } = useForm<sendData>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<sendData> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<sendData> = async (data) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}user/login`,
+        data
+      );
+      if (response.status === 201) {
+        reset();
+        setUser({ email: data.email, isLoggedIn: true });
+        toast.success("로그인에 성공하셨습니다");
+        navigate("/project02");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data);
+      }
+    }
   };
+  console.log(user);
 
   const userEmail = {
     required: "이메일을 입력해 주세요",
@@ -55,6 +83,7 @@ const Login = () => {
           <input
             type="password"
             id="password"
+            autoComplete="off"
             placeholder="비밀번호를 입력하세요."
             {...register("password", userPassword)}
           />
@@ -66,6 +95,7 @@ const Login = () => {
 
           <div className="login_btn">
             <button type="submit">로그인 하기</button>
+            {error && <span>{error?.errorMessage}</span>}
           </div>
           <p>
             아이디가 없으면 <a href="/project02/join">회원가입</a>

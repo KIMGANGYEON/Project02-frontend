@@ -1,6 +1,13 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+interface error {
+  errorMessage: string;
+}
 
 interface sendData {
   name: string;
@@ -10,6 +17,8 @@ interface sendData {
 }
 
 const Join = () => {
+  const [error, setError] = useState<error>();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -17,12 +26,26 @@ const Join = () => {
     reset,
   } = useForm<sendData>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<sendData> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<sendData> = async (data) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}user/join`,
+        data
+      );
+      if (response.status === 201) {
+        reset();
+        toast.success("회원가입이 완료되었습니다");
+        navigate("/project02/login");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data);
+      }
+    }
   };
 
   const userName = {
-    required: "이메일을 입력해 주세요",
+    required: "이름을 입력해 주세요",
   };
 
   const userEmail = {
@@ -81,6 +104,7 @@ const Join = () => {
           <input
             type="password"
             id="password"
+            autoComplete="off"
             placeholder="비밀번호를 입력하세요."
             {...register("password", userPassword)}
           />
@@ -94,6 +118,7 @@ const Join = () => {
           <input
             type="password"
             id="password2"
+            autoComplete="off"
             placeholder="비밀번호를 입력하세요."
             {...register("password2", userPassword2)}
           />
@@ -104,7 +129,8 @@ const Join = () => {
           )}
 
           <div className="login_btn">
-            <button type="submit">로그인 하기</button>
+            <button type="submit">회원가입 하기</button>
+            {error && <span>{error?.errorMessage}</span>}
           </div>
           <p>
             아이디가 있으면 <a href="/project02/login">로그인</a>

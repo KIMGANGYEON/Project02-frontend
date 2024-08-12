@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../../atom";
 
 const Navbar = () => {
   const [showMenubar, setShowMenubar] = useState(false);
+  const isLoggedIn = useRecoilValue(userState);
 
   const handleShowMenubar = () => {
     setShowMenubar((prev) => !prev);
@@ -28,10 +31,19 @@ const Navbar = () => {
           </div>
           <div className="project02_navbar_header_text">
             <h1>검색하기</h1>
-            <h1>
-              <Link to={"/project02/login"}>로그인</Link>
-            </h1>
-            <h1 onClick={handleShowMenubar}>더보기</h1>
+            {isLoggedIn.isLoggedIn ? (
+              <h1>
+                <Link to={"/project02/login"}>로그아웃</Link>
+              </h1>
+            ) : (
+              <h1>
+                <Link to={"/project02/login"}>로그인</Link>
+              </h1>
+            )}
+
+            {isLoggedIn.isLoggedIn ? (
+              <h1 onClick={handleShowMenubar}>더보기</h1>
+            ) : null}
           </div>
         </div>
       </div>
