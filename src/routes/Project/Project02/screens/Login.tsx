@@ -32,7 +32,8 @@ const Login = () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}user/login`,
-        data
+        data,
+        { withCredentials: true }
       );
       if (response.status === 201) {
         reset();

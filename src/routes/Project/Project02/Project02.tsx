@@ -10,7 +10,7 @@ import Notauthroutes from "./common/Notauthroutes";
 
 const Layout = () => {
   return (
-    <div>
+    <div style={{ overflowX: "hidden", paddingBottom: 30 }}>
       <Navbar />
       <main>
         <Outlet />

@@ -1,0 +1,47 @@
+.productbox_header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  .productbox_title {
+    font-size: 55px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+  }
+  button {
+    font-size: 20px;
+  }
+}
+.productbox {
+  display: flex;
+  gap: 20px;
+  width: 7000px;
+  padding-left: 30px;
+  padding-right: 10px;
+  .productbox_box {
+    width: 350px;
+    height: 550px;
+    border: 2px solid black;
+    padding: 10px;
+    justify-content: space-between;
+    position: relative;
+    transition: all 1s ease;
+    img {
+      width: 80%;
+      height: 80%;
+      border: 1px solid;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 20px;
+      width: 90%;
+      line-height: 25px;
+    }
+    h2 {
+      position: absolute;
+      bottom: 10px;
+      font-weight: bold;
+      font-size: 20px;
+      right: 10px;
+    }
+  }
+}
