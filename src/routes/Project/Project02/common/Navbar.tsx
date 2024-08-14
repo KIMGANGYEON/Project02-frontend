@@ -15,10 +15,12 @@ const Navbar = () => {
   const handleLogout = async () => {
     const response = await axios.post(
       `${process.env.REACT_APP_BASE_URL}user/logout`,
-      { withCredentials: true }
+      {},
+      { withCredentials: true } // withCredentials 옵션 추가
     );
     if (response.status === 201) {
       setUserState({ isLoggedin: false });
+      window.location.reload();
       toast.success("로그아웃에 성공하셨습니다");
     }
   };
@@ -27,7 +29,9 @@ const Navbar = () => {
       <div className="project02_navbar">
         {showMenubar && (
           <div className="project02_menubar">
-            <span>내 정보 수정</span>
+            <Link to={"/project02/user/editprofile"}>
+              <span>내 정보 수정</span>
+            </Link>
             <span>상품 업로드</span>
             <span>내 상품 수정</span>
             <span>장바구니</span>

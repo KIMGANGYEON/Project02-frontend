@@ -7,6 +7,7 @@ import NotFound from "./screens/NotFound";
 import Join from "./screens/Join";
 import { useRecoilValue } from "recoil";
 import Notauthroutes from "./common/Notauthroutes";
+import EdituserProfile from "./screens/EdituserProfile";
 
 const Layout = () => {
   return (
@@ -29,6 +30,7 @@ const Project02 = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         {/* </Route> */}
+        <Route path="user/editprofile" element={<EdituserProfile />} />
 
         <Route path="*" element={<NotFound />} />
       </Route>
