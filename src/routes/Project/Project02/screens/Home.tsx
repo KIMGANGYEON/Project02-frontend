@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ProductBox from "../common/ProductBox";
+import ProductBox from "./Product/ProductBox";
 import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -8,7 +8,6 @@ import {
   getNovel,
   getSelfDevelop,
 } from "../../../../api";
-import { useRecoilState } from "recoil";
 
 const Home = () => {
   const { data: selfDevelop } = useQuery({

@@ -8,6 +8,8 @@ import Join from "./screens/Join";
 import { useRecoilValue } from "recoil";
 import Notauthroutes from "./common/Notauthroutes";
 import EdituserProfile from "./screens/EdituserProfile";
+import ProductDetail from "./screens/Product/ProductDetail";
+import ProductUpload from "./screens/Product/ProductUpload";
 
 const Layout = () => {
   return (
@@ -31,6 +33,9 @@ const Project02 = () => {
         <Route path="/join" element={<Join />} />
         {/* </Route> */}
         <Route path="user/editprofile" element={<EdituserProfile />} />
+
+        <Route path="product/upload" element={<ProductUpload />} />
+        <Route path="product/detail/:id" element={<ProductDetail />} />
 
         <Route path="*" element={<NotFound />} />
       </Route>

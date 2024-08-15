@@ -21,7 +21,7 @@ const Navbar = () => {
     if (response.status === 201) {
       setUserState({ isLoggedin: false });
       window.location.reload();
-      toast.success("로그아웃에 성공하셨습니다");
+      // toast.success("로그아웃에 성공하셨습니다");
     }
   };
   return (
@@ -32,7 +32,9 @@ const Navbar = () => {
             <Link to={"/project02/user/editprofile"}>
               <span>내 정보 수정</span>
             </Link>
-            <span>상품 업로드</span>
+            <Link to={"/project02/product/upload"}>
+              <span>상품 업로드</span>
+            </Link>
             <span>내 상품 수정</span>
             <span>장바구니</span>
             <span>결제내역</span>
@@ -46,6 +48,7 @@ const Navbar = () => {
           </div>
           <div className="project02_navbar_header_text">
             <h1>검색하기</h1>
+            <h1>중고상품</h1>
 
             {userState.isLoggedIn ? (
               <h1 onClick={handleLogout}>로그아웃</h1>

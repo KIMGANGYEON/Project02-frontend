@@ -19,7 +19,6 @@ interface sendData {
 const Login = () => {
   const [error, setError] = useState<error>();
   const [userState, setUserState] = useRecoilState(isAuth);
-  console.log(userState);
   const navigate = useNavigate();
   const {
     register,

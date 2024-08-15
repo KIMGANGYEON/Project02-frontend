@@ -62,6 +62,8 @@ function EdituserProfile() {
       );
       if (response.status === 201) {
         setError(undefined);
+        toast.success("회원정보 수정을 성공하셨습니다");
+        navigate("/project02");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

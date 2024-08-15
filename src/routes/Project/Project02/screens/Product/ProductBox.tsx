@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Book {
   title: string;
@@ -47,15 +48,16 @@ const ProductBox: React.FC<dataProp> = ({ data, title }) => {
         </div>
         <div className="productbox" ref={productRef}>
           {data?.map((book) => (
-            <div
-              key={book.isbn}
-              className="productbox_box"
-              style={{ transform: `translateX(${moveBox}px)` }}
-            >
-              <img src={book.image} alt="" />
-              <h1>{book.title}</h1>
-              <h2>{book.author}</h2>
-            </div>
+            <Link to={`/project02/product/detail/${book.isbn}`} key={book.isbn}>
+              <div
+                className="productbox_box"
+                style={{ transform: `translateX(${moveBox}px)` }}
+              >
+                <img src={book.image} alt="" />
+                <h1>{book.title}</h1>
+                <h2>{book.author}</h2>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
