@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import EdituserProfile from "./screens/EdituserProfile";
 import ProductDetail from "./screens/Product/ProductDetail";
 import ProductUpload from "./screens/Product/ProductUpload";
+import ProductEdit from "./screens/Product/ProductEdit";
 
 const Layout = () => {
   return (
@@ -34,6 +35,7 @@ const Project02 = () => {
         <Route path="user/editprofile" element={<EdituserProfile />} />
 
         <Route path="product/upload" element={<ProductUpload />} />
+        <Route path="product/edit" element={<ProductEdit />} />
         <Route path="product/detail/:id" element={<ProductDetail />} />
 
         <Route path="*" element={<NotFound />} />

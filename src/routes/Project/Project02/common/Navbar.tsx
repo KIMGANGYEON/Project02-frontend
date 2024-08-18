@@ -35,7 +35,9 @@ const Navbar = () => {
             <Link to={"/project02/product/upload"}>
               <span>상품 업로드</span>
             </Link>
-            <span>내 상품 수정</span>
+            <Link to={"product/edit"}>
+              <span>내 상품 수정</span>
+            </Link>
             <span>장바구니</span>
             <span>결제내역</span>
           </div>
