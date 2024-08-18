@@ -1,0 +1,24 @@
+.fileupload {
+  margin-top: 50px;
+  align-items: center;
+  padding: 10px;
+  .fileupload_imgbox {
+    display: flex;
+    overflow: hidden;
+    gap: 10px;
+  }
+  .fileupload_text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      cursor: pointer;
+      font-size: 50px;
+      span {
+        cursor: pointer;
+
+        font-size: 20px;
+      }
+    }
+  }
+}

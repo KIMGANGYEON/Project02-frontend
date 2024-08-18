@@ -6,7 +6,6 @@ import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
 import Join from "./screens/Join";
 import { useRecoilValue } from "recoil";
-import Notauthroutes from "./common/Notauthroutes";
 import EdituserProfile from "./screens/EdituserProfile";
 import ProductDetail from "./screens/Product/ProductDetail";
 import ProductUpload from "./screens/Product/ProductUpload";

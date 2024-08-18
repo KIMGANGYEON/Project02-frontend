@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,19 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm<sendData>({ mode: "onChange" });
+
+  const getAuth = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}user/login`,
+        { withCredentials: true }
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        navigate("/project02");
+      }
+    }
+  };
 
   const onSubmit: SubmitHandler<sendData> = async (data) => {
     try {
@@ -58,6 +71,10 @@ const Login = () => {
       message: "최소 6자리 이상입니다",
     },
   };
+
+  useEffect(() => {
+    getAuth();
+  }, []);
   return (
     <>
       <Helmet>

@@ -22,13 +22,13 @@ const ProductBox: React.FC<dataProp> = ({ data, title }) => {
     if (moveBox === 0) {
       return;
     }
-    setMoveBox((prev) => prev + 400);
+    setMoveBox((prev) => prev + 705);
   };
   const handleMoveRight = () => {
-    if (moveBox === -5200) {
+    if (moveBox === -5640) {
       return;
     }
-    setMoveBox((prev) => prev - 400);
+    setMoveBox((prev) => prev - 705);
   };
 
   useEffect(() => {
