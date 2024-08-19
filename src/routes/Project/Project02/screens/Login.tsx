@@ -52,6 +52,7 @@ const Login = () => {
         setUserState({ isLoggedIn: true });
         toast.success("로그인에 성공하셨습니다");
         navigate("/project02");
+        window.location.reload();
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

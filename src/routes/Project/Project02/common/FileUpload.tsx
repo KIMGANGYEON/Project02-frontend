@@ -32,6 +32,12 @@ const FileUpload: React.FC<FileUploadProps> = ({ images, onImageChange }) => {
     }
   };
 
+  const handleDelete = (index: number) => {
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    onImageChange(newImages);
+  };
+
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -52,16 +58,20 @@ const FileUpload: React.FC<FileUploadProps> = ({ images, onImageChange }) => {
       };
     }
   }, []);
+
   return (
     <div className="fileupload">
       <div className="fileupload_imgbox" ref={scrollRef}>
         {images.map((image, index) => (
-          <div key={index}>
+          <div key={index} style={{ position: "relative" }}>
             <img
               src={`${process.env.REACT_APP_BASE_URL}${image}`}
               alt=""
               style={{ width: 300, height: 200 }}
             />
+            <button type="button" onClick={() => handleDelete(index)}>
+              x
+            </button>
           </div>
         ))}
       </div>

@@ -3,9 +3,22 @@
   align-items: center;
   padding: 10px;
   .fileupload_imgbox {
+    position: relative;
     display: flex;
     overflow: hidden;
     gap: 10px;
+    button {
+      position: absolute;
+      z-index: 1;
+      right: 10px;
+      top: 10px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      &:hover {
+        background-color: gray;
+      }
+    }
   }
   .fileupload_text {
     display: flex;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./common/Navbar";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Home from "./screens/Home";
@@ -10,6 +10,7 @@ import EdituserProfile from "./screens/EdituserProfile";
 import ProductDetail from "./screens/Product/ProductDetail";
 import ProductUpload from "./screens/Product/ProductUpload";
 import ProductEdit from "./screens/Product/ProductEdit";
+import ProductEditDetail from "./screens/Product/ProductEditDetail";
 
 const Layout = () => {
   return (
@@ -36,6 +37,7 @@ const Project02 = () => {
 
         <Route path="product/upload" element={<ProductUpload />} />
         <Route path="product/edit" element={<ProductEdit />} />
+        <Route path="product/edit/:id" element={<ProductEditDetail />} />
         <Route path="product/detail/:id" element={<ProductDetail />} />
 
         <Route path="*" element={<NotFound />} />

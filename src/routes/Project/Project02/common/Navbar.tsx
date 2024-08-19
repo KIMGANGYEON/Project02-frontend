@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isAuth } from "../../../../atom";
@@ -7,10 +7,24 @@ import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [showMenubar, setShowMenubar] = useState(false);
-  const [userState, setUserState] = useRecoilState(isAuth);
+  const [user, setUser] = useState();
   const handleShowMenubar = () => {
     setShowMenubar((prev) => !prev);
   };
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}user/logout`,
+        { withCredentials: true }
+      );
+      setUser(response.data.user);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const handleLogout = async () => {
     const response = await axios.post(
@@ -19,11 +33,11 @@ const Navbar = () => {
       { withCredentials: true } // withCredentials 옵션 추가
     );
     if (response.status === 201) {
-      setUserState({ isLoggedin: false });
       window.location.reload();
       // toast.success("로그아웃에 성공하셨습니다");
     }
   };
+
   return (
     <>
       <div className="project02_navbar">
@@ -52,7 +66,7 @@ const Navbar = () => {
             <h1>검색하기</h1>
             <h1>중고상품</h1>
 
-            {userState.isLoggedIn ? (
+            {user ? (
               <h1 onClick={handleLogout}>로그아웃</h1>
             ) : (
               <h1>
@@ -60,9 +74,7 @@ const Navbar = () => {
               </h1>
             )}
 
-            {userState.isLoggedIn && (
-              <h1 onClick={handleShowMenubar}>더보기</h1>
-            )}
+            {user && <h1 onClick={handleShowMenubar}>더보기</h1>}
           </div>
         </div>
       </div>

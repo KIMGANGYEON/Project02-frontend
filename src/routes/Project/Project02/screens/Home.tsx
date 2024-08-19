@@ -8,8 +8,9 @@ import {
   getNovel,
   getSelfDevelop,
 } from "../../../../api";
+import axios from "axios";
 
-const Home = () => {
+const Home: React.FC = () => {
   const { data: selfDevelop } = useQuery({
     queryKey: ["selfDevelop"],
     queryFn: getSelfDevelop,

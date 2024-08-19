@@ -1,10 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 interface Product {
   _id: string;
   title: string;
+  images: string;
+  createdAt: string;
 }
 
 const ProductEdit = () => {
@@ -21,7 +25,6 @@ const ProductEdit = () => {
       if (response.status === 201) {
         setUser(response.data.user);
         setProducts(response.data.product);
-        console.log(products);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -39,14 +42,51 @@ const ProductEdit = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Product Edit</title>
+      </Helmet>
       {user ? (
-        <div>
-          <div>
-            <h1>hello</h1>
+        <div className="productedit">
+          <div className="productedit_header">
+            <h1>내 상품 수정</h1>
           </div>
-          {products?.map((item) => (
-            <div key={item._id}>{item.title}</div>
-          ))}
+          {products.length === 0 ? (
+            <div style={{ marginTop: 50 }}>
+              <h1 style={{ fontSize: 30 }}>등록한 상품이 없습니다</h1>
+            </div>
+          ) : (
+            <>
+              {products?.map((item) => (
+                <div key={item._id} className="productedit_box">
+                  <div className="productedit_img">
+                    <img
+                      src={`${process.env.REACT_APP_BASE_URL}${item.images[0]}`}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <div className="productedit_text">
+                      <h1>{item.title}</h1>
+                      <h2>{item.createdAt.split("T")[0]}</h2>
+                    </div>
+                    <div className="productedit_btn">
+                      <Link to={`/project02/product/edit/${item._id}`}>
+                        <button>수정</button>
+                      </Link>
+                      <button>삭제</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       ) : null}
     </>

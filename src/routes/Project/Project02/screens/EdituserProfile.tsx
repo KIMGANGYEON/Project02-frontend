@@ -71,7 +71,6 @@ function EdituserProfile() {
       }
     }
   };
-  console.log(error);
 
   useEffect(() => {
     getUserProfile();
