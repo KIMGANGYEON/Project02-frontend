@@ -32,7 +32,17 @@ const FileUpload: React.FC<FileUploadProps> = ({ images, onImageChange }) => {
     }
   };
 
-  const handleDelete = (index: number) => {
+  const handleDelete = async (index: number) => {
+    const filename = images[index];
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}product/delete/image`,
+        { filename }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+
     const newImages = [...images];
     newImages.splice(index, 1);
     onImageChange(newImages);

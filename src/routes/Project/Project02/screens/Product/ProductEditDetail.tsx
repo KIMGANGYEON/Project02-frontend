@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import FileUpload from "../../common/FileUpload";
+import EditFileUpload from "../../common/EditFileUpload";
 
 interface product {
   title: string;
@@ -22,6 +23,7 @@ const ProductEditDetail = () => {
   const { id } = useParams<string>();
   const [product, setProduct] = useState<product>();
   const navigate = useNavigate();
+  const [productImages, setProductImages] = useState<string[]>([]);
 
   const getData = async () => {
     try {
@@ -31,6 +33,7 @@ const ProductEditDetail = () => {
       );
       const productData = response.data.product[0];
       setProduct(productData);
+      setProductImages(productData.images);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
@@ -40,7 +43,6 @@ const ProductEditDetail = () => {
       }
     }
   };
-
   const {
     register,
     handleSubmit,
@@ -63,10 +65,15 @@ const ProductEditDetail = () => {
     required: "가격을 입력해 주세요",
   };
 
+  function handleImages(newImages: string[]) {
+    const flattenedImages = newImages.flat ? newImages.flat() : newImages;
+    setProductImages(flattenedImages);
+  }
+
   useEffect(() => {
     getData();
   }, []);
-  console.log(product);
+  // console.log(product);
 
   return (
     <>
@@ -79,6 +86,7 @@ const ProductEditDetail = () => {
           <h1>상품 수정 하기</h1>
         </div>
         <form onSubmit={handleSubmit(onsubmit)}>
+          <EditFileUpload images={productImages} onImageChange={handleImages} />
           <label htmlFor="title">제목</label>
           <input
             type="text"
@@ -127,7 +135,7 @@ const ProductEditDetail = () => {
             </div>
           )}
           <div className="product_puload_btn">
-            <button type="submit">생성하기</button>
+            <button type="submit">수정하기</button>
           </div>
         </form>
       </div>

@@ -21,9 +21,8 @@
     }
   }
   .fileupload_text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    width: 25%;
     p {
       cursor: pointer;
       font-size: 50px;

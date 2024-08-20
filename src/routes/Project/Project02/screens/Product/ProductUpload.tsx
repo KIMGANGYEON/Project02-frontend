@@ -20,6 +20,7 @@ interface sendData {
 
 const ProductUpload = () => {
   const [user, setUser] = useState();
+  const [sendData, setSendData] = useState<boolean>(false);
   const navigate = useNavigate();
   const [productImages, setProductImages] = useState<{ images: string[] }>({
     images: [],
@@ -46,8 +47,6 @@ const ProductUpload = () => {
         }
       );
       if (response.status === 201) {
-        console.log(response);
-        setUser(response.data);
         navigate("/project02");
         toast.success("상품 업로드에 성공하셨습니다");
       }
