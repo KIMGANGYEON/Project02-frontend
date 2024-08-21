@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getBookDetail } from "../../../../../api";
+import { Helmet } from "react-helmet";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -12,6 +13,9 @@ const ProductDetail = () => {
   });
   return (
     <>
+      <Helmet>
+        <title>{book?.title}</title>
+      </Helmet>
       <div className="product_detail">
         <div className="product_detail_box">
           <div className="product_detail_img">

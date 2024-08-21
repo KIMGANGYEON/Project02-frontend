@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface Product {
   _id: string;
@@ -12,7 +13,7 @@ interface Product {
 }
 
 const ProductEdit = () => {
-  const native = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState();
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -29,10 +30,29 @@ const ProductEdit = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          native("/project02/login");
+          navigate("/project02/login");
           alert("로그인이 필요합니다");
         }
       }
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm("정말로 삭제하시겠 습니까?")) {
+      try {
+        const response = await axios.delete(
+          `${process.env.REACT_APP_BASE_URL}product/delete/${id}`,
+          { withCredentials: true }
+        );
+        if (response.status === 201) {
+          navigate("/project02");
+          toast.success("상품 삭제가 완료 됐습니다");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log("nn");
     }
   };
 
@@ -80,7 +100,9 @@ const ProductEdit = () => {
                       <Link to={`/project02/product/edit/${item._id}`}>
                         <button>수정</button>
                       </Link>
-                      <button>삭제</button>
+                      <button onClick={() => handleDelete(item._id)}>
+                        삭제
+                      </button>
                     </div>
                   </div>
                 </div>

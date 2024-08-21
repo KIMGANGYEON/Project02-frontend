@@ -49,9 +49,17 @@ const ProductEditDetail = () => {
     register,
     handleSubmit,
     formState: { errors },
-
+    setValue,
     reset,
   } = useForm<sendData>({ mode: "onChange" });
+
+  useEffect(() => {
+    if (product) {
+      setValue("title", product.title);
+      setValue("price", product.price);
+      setValue("description", product.description);
+    }
+  }, [product, setValue]);
 
   const onsubmit: SubmitHandler<sendData> = async (data) => {
     if (productImages.length === 0) {
@@ -95,8 +103,6 @@ const ProductEditDetail = () => {
     const flattenedImages = newImages.flat ? newImages.flat() : newImages;
     setProductImages(flattenedImages);
   }
-
-  console.log(productImages);
 
   useEffect(() => {
     getData();
