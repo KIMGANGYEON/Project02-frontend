@@ -4,6 +4,7 @@ import Dropzone from "react-dropzone";
 
 interface FileUploadProps {
   images: string[];
+
   onImageChange: any;
 }
 

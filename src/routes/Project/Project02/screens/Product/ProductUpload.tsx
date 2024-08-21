@@ -20,7 +20,7 @@ interface sendData {
 
 const ProductUpload = () => {
   const [user, setUser] = useState();
-  const [sendData, setSendData] = useState<boolean>(false);
+  const [getError, setGetError] = useState(false);
   const navigate = useNavigate();
   const [productImages, setProductImages] = useState<{ images: string[] }>({
     images: [],
@@ -33,6 +33,11 @@ const ProductUpload = () => {
   } = useForm<sendData>({ mode: "onChange" });
 
   const onsubmit: SubmitHandler<sendData> = async (data) => {
+    if (productImages.images.length === 0) {
+      setGetError(true);
+      return;
+    }
+
     const body = {
       data,
       productImages,
@@ -112,6 +117,13 @@ const ProductUpload = () => {
               images={productImages.images}
               onImageChange={handleImages}
             />
+            {getError && (
+              <div style={{ marginTop: 8 }}>
+                <span style={{ color: "red" }}>
+                  이미지를 최소 한개를 넣어야 합니다
+                </span>
+              </div>
+            )}
 
             <label htmlFor="title">제목</label>
             <input

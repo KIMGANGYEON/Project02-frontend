@@ -1,27 +1,29 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import FileUpload from "../../common/FileUpload";
 import EditFileUpload from "../../common/EditFileUpload";
+import { toast } from "react-toastify";
 
 interface product {
   title: string;
   description: string;
-  price: number;
+  price: string;
   images: string[];
 }
 
 interface sendData {
   title: string;
   description: string;
-  price: number;
+  price: string;
 }
 
 const ProductEditDetail = () => {
   const { id } = useParams<string>();
   const [product, setProduct] = useState<product>();
+  const [getError, setGetError] = useState(false);
   const navigate = useNavigate();
   const [productImages, setProductImages] = useState<string[]>([]);
 
@@ -51,7 +53,31 @@ const ProductEditDetail = () => {
     reset,
   } = useForm<sendData>({ mode: "onChange" });
 
-  const onsubmit = () => {};
+  const onsubmit: SubmitHandler<sendData> = async (data) => {
+    if (productImages.length === 0) {
+      setGetError(true);
+      return;
+    }
+
+    const body = {
+      data,
+      productImages,
+    };
+    try {
+      reset();
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}product/edit/detail/${id}`,
+        body,
+        { withCredentials: true }
+      );
+      if (response.status === 201) {
+        navigate("/project02");
+        toast.success("상품 수정을 완료했습니다");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const productTitle = {
     required: "제목을 입력해 주세요",
@@ -70,6 +96,8 @@ const ProductEditDetail = () => {
     setProductImages(flattenedImages);
   }
 
+  console.log(productImages);
+
   useEffect(() => {
     getData();
   }, []);
@@ -87,12 +115,18 @@ const ProductEditDetail = () => {
         </div>
         <form onSubmit={handleSubmit(onsubmit)}>
           <EditFileUpload images={productImages} onImageChange={handleImages} />
+          {getError && (
+            <div style={{ marginTop: 8 }}>
+              <span style={{ color: "red" }}>
+                이미지를 최소 한개를 넣어야 합니다
+              </span>
+            </div>
+          )}
           <label htmlFor="title">제목</label>
           <input
             type="text"
             id="title"
-            placeholder="제목을 입력해 주세요"
-            defaultValue={product?.title}
+            placeholder={product?.title}
             {...register("title", productTitle)}
           />
           {errors?.title && (
@@ -107,8 +141,7 @@ const ProductEditDetail = () => {
           <input
             type="number"
             id="price"
-            placeholder="가격을 입력해 주세요"
-            defaultValue={product?.price}
+            placeholder={product?.price}
             {...register("price", productPrice)}
           />
 
@@ -123,8 +156,7 @@ const ProductEditDetail = () => {
           <label htmlFor="description">설명</label>
           <textarea
             id="description"
-            defaultValue={product?.description}
-            placeholder="설명을 입력해 주세요"
+            placeholder={product?.description}
             {...register("description", productDescription)}
           />
           {errors?.description && (
