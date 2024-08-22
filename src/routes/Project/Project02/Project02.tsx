@@ -11,6 +11,8 @@ import ProductDetail from "./screens/Product/ProductDetail";
 import ProductUpload from "./screens/Product/ProductUpload";
 import ProductEdit from "./screens/Product/ProductEdit";
 import ProductEditDetail from "./screens/Product/ProductEditDetail";
+import Cart from "./screens/Cart";
+import UsedrProduct from "./screens/Product/UsedrProduct";
 
 const Layout = () => {
   return (
@@ -34,6 +36,9 @@ const Project02 = () => {
         <Route path="/join" element={<Join />} />
         {/* </Route> */}
         <Route path="user/editprofile" element={<EdituserProfile />} />
+        <Route path="user/cart" element={<Cart />} />
+
+        <Route path="product/used" element={<UsedrProduct />} />
 
         <Route path="product/upload" element={<ProductUpload />} />
         <Route path="product/edit" element={<ProductEdit />} />
