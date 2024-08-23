@@ -30,7 +30,7 @@ const Navbar = () => {
     const response = await axios.post(
       `${process.env.REACT_APP_BASE_URL}user/logout`,
       {},
-      { withCredentials: true } // withCredentials 옵션 추가
+      { withCredentials: true }
     );
     if (response.status === 201) {
       window.location.reload();

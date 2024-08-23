@@ -7,18 +7,17 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 interface Product {
   title: string;
   _id: string;
   images: string[];
-  price: string;
+  price: number;
 }
 
 const UsedrProduct = () => {
   const [products, setProducts] = useState<Product[]>();
-
-  const imgRef = useRef(null);
 
   const getProduct = async () => {
     try {
@@ -30,8 +29,7 @@ const UsedrProduct = () => {
     } catch (error) {}
   };
 
-  // console.log(products);
-  console.log(imgRef.current);
+  console.log(products);
 
   useEffect(() => {
     getProduct();
@@ -63,8 +61,10 @@ const UsedrProduct = () => {
               ))}
             </Swiper>
             <div className="usedproduct_text">
-              <h1>{item.title}</h1>
-              <h2>{item.price} 원</h2>
+              <Link to={`/project02/product/used/detail/${item._id}`}>
+                <h1>{item.title}</h1>
+              </Link>
+              <h2>{item.price.toLocaleString("ko-KR")} 원</h2>
             </div>
           </div>
         ))}
