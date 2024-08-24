@@ -1,0 +1,29 @@
+.newbookcart {
+  padding: 10px;
+  .newbookcart_header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1 {
+      font-size: 30px;
+    }
+  }
+  .newbookcart_product {
+    margin-top: 30px;
+    display: flex;
+    border-top: 1px solid black;
+    padding: 10px;
+    .newbookcart_product_img {
+      img {
+        width: 80px;
+        border: 1px solid black;
+      }
+    }
+    h1 {
+      font-size: 20px;
+    }
+    .newbookcart_product_text {
+      margin-left: 20px;
+    }
+  }
+}

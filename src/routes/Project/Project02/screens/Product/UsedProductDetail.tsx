@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
+import { toast } from "react-toastify";
 
 interface Product {
   title: string;
@@ -35,7 +36,7 @@ const UsedProductDetail = () => {
 
   console.log(product);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!user) {
       const login = window.confirm("로그인이 필요합니다 로그인 하시겠습니까?");
       if (login) {
@@ -44,6 +45,18 @@ const UsedProductDetail = () => {
         return;
       }
     } else {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}user/add/used/cart/${id}`,
+          { id },
+          { withCredentials: true }
+        );
+        if (response.status === 201) {
+          toast.success("장바구니에 추가되었습니다");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
   return (

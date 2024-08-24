@@ -1,0 +1,36 @@
+.usercart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .usercart_header {
+    margin-top: 60px;
+    h1 {
+      font-size: 50px;
+      font-weight: bold;
+    }
+  }
+  .usercart_item {
+    display: flex;
+    margin-top: 30px;
+    border: 1px solid black;
+    .newitem {
+      width: 45vw;
+      height: 60vh;
+      overflow-y: scroll;
+      .newitem_box {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .useditem {
+      width: 45vw;
+      height: 60vh;
+      overflow-y: scroll;
+      .useditem_box {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}

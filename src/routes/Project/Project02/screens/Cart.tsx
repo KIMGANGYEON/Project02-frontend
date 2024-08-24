@@ -2,10 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
+import NewBookData from "./Cart/NewBookData";
+
+interface ProductData {
+  id: string;
+  quantity: number;
+  date: number;
+}
 
 const Cart = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState();
+  const [newBook, setNewBook] = useState<ProductData[]>([]);
+  const [usedBook, setUsedBook] = useState();
 
   const getCart = async () => {
     try {
@@ -14,6 +23,8 @@ const Cart = () => {
         { withCredentials: true }
       );
       setUserData(response.data.user);
+      setNewBook(response.data.user.cart.cart.new);
+      setUsedBook(response.data.user.cart.cart.used);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
@@ -23,7 +34,6 @@ const Cart = () => {
       }
     }
   };
-  console.log(userData);
 
   useEffect(() => {
     getCart();
@@ -34,7 +44,23 @@ const Cart = () => {
       <Helmet>
         <title>Cart</title>
       </Helmet>
-      <div>Cart</div>
+      {userData ? (
+        <div className="usercart">
+          <div className="usercart_header">
+            <h1>장바구니</h1>
+          </div>
+          <div className="usercart_item">
+            <div className="newitem">
+              <div className="newitem_box">
+                <NewBookData productData={newBook} />
+              </div>
+            </div>
+            <div className="useditem">
+              <div className="useditem_box">2</div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 };

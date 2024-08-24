@@ -49,9 +49,9 @@ const Login = () => {
       );
       if (response.status === 201) {
         reset();
-        navigate("/project02");
         window.location.reload();
-        toast.success("로그인에 성공하셨습니다");
+        navigate("/project02");
+        // toast.success("로그인에 성공하셨습니다");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
