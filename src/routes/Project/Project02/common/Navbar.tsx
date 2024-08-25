@@ -55,7 +55,7 @@ const Navbar = () => {
             <Link to={"/project02/user/cart"}>
               <span>장바구니</span>
             </Link>
-            <span>결제내역</span>
+            {/* <span>결제내역</span> */}
           </div>
         )}
         <div className="project02_navbar_header">
@@ -65,7 +65,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="project02_navbar_header_text">
-            <h1>검색하기</h1>
+            {/* <h1>검색하기</h1> */}
             <Link to={"/project02/product/used"}>
               <h1>중고상품</h1>
             </Link>

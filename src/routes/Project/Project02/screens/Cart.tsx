@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import NewBookData from "./Cart/NewBookData";
+import UsedBookData from "./Cart/UsedBookData";
 
 interface ProductData {
   id: string;
@@ -14,7 +15,9 @@ const Cart = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState();
   const [newBook, setNewBook] = useState<ProductData[]>([]);
-  const [usedBook, setUsedBook] = useState();
+  const [usedBook, setUsedBook] = useState<ProductData[]>([]);
+
+  console.log(usedBook);
 
   const getCart = async () => {
     try {
@@ -23,8 +26,8 @@ const Cart = () => {
         { withCredentials: true }
       );
       setUserData(response.data.user);
-      setNewBook(response.data.user.cart.cart.new);
-      setUsedBook(response.data.user.cart.cart.used);
+      setNewBook(response.data.user.cart.new);
+      setUsedBook(response.data.user.cart.used);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
@@ -56,7 +59,7 @@ const Cart = () => {
               </div>
             </div>
             <div className="useditem">
-              <div className="useditem_box">2</div>
+              <UsedBookData productData={usedBook} />
             </div>
           </div>
         </div>
