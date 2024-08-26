@@ -26,8 +26,13 @@ const Cart = () => {
         { withCredentials: true }
       );
       setUserData(response.data.user);
-      setNewBook(response.data.user.cart.new);
-      setUsedBook(response.data.user.cart.used);
+      setNewBook(
+        response.data.user.cart.cart.new || response.data.user.cart.new
+      );
+      setUsedBook(
+        response.data.user.cart.cart.used || response.data.user.cart.used
+      );
+      console.log(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface ProductData {
   id: string;
@@ -46,7 +47,9 @@ const UsedBookData: React.FC<{ productData: ProductData[] }> = ({
     } catch (error) {}
   };
 
-  useEffect(() => {}, [getUsedBook()]);
+  useEffect(() => {
+    getUsedBook();
+  }, []);
 
   const handleCheckboxChange = (book: BooksDetail) => {
     setSelectedBooks((prevSelectedBooks) => {
@@ -62,7 +65,7 @@ const UsedBookData: React.FC<{ productData: ProductData[] }> = ({
     });
   };
 
-  const handleQuantityChange = (id: string, delta: number) => {
+  const handleQuantityChange = async (id: string, delta: number) => {
     setBooks((prevBooks) =>
       prevBooks.map((book) =>
         book._id === id
@@ -70,6 +73,37 @@ const UsedBookData: React.FC<{ productData: ProductData[] }> = ({
           : book
       )
     );
+    const body = { id, delta };
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}user/used/cart/edit`,
+        body,
+        { withCredentials: true }
+      );
+      if (response.status === 201) {
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteItem = async (id: string) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}user/used/cart/delete`,
+        { id },
+        { withCredentials: true }
+      );
+      if (response.status === 201) {
+        setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
+        setSelectedBooks((prevSelectedBooks) =>
+          prevSelectedBooks.filter((book) => book._id !== id)
+        );
+        toast.success("장바구니에서 삭제되었습니다");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -87,7 +121,7 @@ const UsedBookData: React.FC<{ productData: ProductData[] }> = ({
       <div className="newbookcart_header">
         <h1>중고상품</h1>
       </div>
-      {productData.length > 0 ? (
+      {books?.length > 0 ? (
         books?.map((item, index) => (
           <div key={index} className="newbookcart_product">
             <div className="newbookcart_product_img">
@@ -115,9 +149,17 @@ const UsedBookData: React.FC<{ productData: ProductData[] }> = ({
                   +
                 </button>
               </div>
-              <h3>
-                가격: {(item.price * item.quantity).toLocaleString("ko-KR")}원
-              </h3>
+              <div style={{ display: "flex" }}>
+                <h3>
+                  가격: {(item.price * item.quantity).toLocaleString("ko-KR")}원
+                </h3>
+                <button
+                  onClick={() => handleDeleteItem(item._id)}
+                  style={{ marginLeft: 30 }}
+                >
+                  삭제하기
+                </button>
+              </div>
             </div>
           </div>
         ))

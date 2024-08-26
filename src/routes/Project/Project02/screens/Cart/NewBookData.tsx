@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface ProductData {
   id: string;
@@ -97,7 +98,7 @@ const NewBookData: React.FC<{ productData: ProductData[] }> = ({
     });
   };
 
-  const handleQuantityChange = (isbn: string, delta: number) => {
+  const handleQuantityChange = async (isbn: string, delta: number) => {
     setBooks((prevBooks) =>
       prevBooks.map((book) =>
         book.isbn === isbn
@@ -105,6 +106,37 @@ const NewBookData: React.FC<{ productData: ProductData[] }> = ({
           : book
       )
     );
+    const body = { isbn, delta };
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}user/new/cart/edit`,
+        body,
+        { withCredentials: true }
+      );
+      if (response.status === 201) {
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteItem = async (id: string) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}user/new/cart/delete`,
+        { id },
+        { withCredentials: true }
+      );
+      if (response.status === 201) {
+        setBooks((prevBooks) => prevBooks.filter((book) => book.isbn !== id));
+        setSelectedBooks((prevSelectedBooks) =>
+          prevSelectedBooks.filter((book) => book.isbn !== id)
+        );
+        toast.success("장바구니에서 삭제되었습니다");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -133,10 +165,18 @@ const NewBookData: React.FC<{ productData: ProductData[] }> = ({
                   +
                 </button>
               </div>
-              <h3>
-                가격: {(item.discount * item.quantity).toLocaleString("ko-KR")}{" "}
-                원
-              </h3>
+              <div style={{ display: "flex" }}>
+                <h3>
+                  가격:{" "}
+                  {(item.discount * item.quantity).toLocaleString("ko-KR")} 원
+                </h3>
+                <button
+                  onClick={() => handleDeleteItem(item.isbn)}
+                  style={{ marginLeft: 30 }}
+                >
+                  삭제하기
+                </button>
+              </div>
             </div>
           </div>
         ))
