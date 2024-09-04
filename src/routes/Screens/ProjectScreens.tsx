@@ -44,7 +44,19 @@ const ProjectScreens = () => {
   return (
     <div className="projectscreens" ref={component}>
       <div className="projectscreens_first">
-        <div>first</div>
+        <div>
+          <h1 style={{ marginBottom: 20 }}>프로젝트 1번 : 기본 css</h1>
+          <h1 style={{ marginBottom: 20 }}>
+            프로젝트 2번 : react node를 활용한 기능 구현
+          </h1>
+          <h1 style={{ marginBottom: 20 }}>
+            사용한 기술: scss express session reactquery
+          </h1>
+          <h1 style={{ marginBottom: 20 }}>
+            현재 하고 있는일:프로젝트 2번을 더 확실하게 알기 위해 redux로
+            상태관리 시도중
+          </h1>
+        </div>
       </div>
       <div className="projectscreens_container" ref={slider}>
         <div className="panel" style={{ backgroundColor: "black" }}>
